@@ -15,22 +15,25 @@ public class ScoreTrakker {
 	public ScoreTrakker() {
 		students = new ArrayList<Student>();
 	}
-	public void loadDataFile(String fileName)
+	public void loadDataFile(String fileName) throws FileNotFoundException
 	{
-		try {
-		      File file = new File(fileName);
-		      Scanner reader = new Scanner(file);
-		      while (reader.hasNextLine()) {
-		        String name = reader.nextLine();
-		        int score = reader.nextInt();
-		        reader.nextLine();
-		    	students.add(new Student(name,score));
-		      }
-		      reader.close();
-		    } catch (FileNotFoundException e) {
-		      System.out.println("An error occurred.");
-		      e.printStackTrace();
-		    }
+		FileReader reader = new FileReader(fileName);
+		Scanner in  = new Scanner(reader);
+		//While there are more lines to read
+		while(in.hasNextLine()) {
+		//read the first two values and store them as a  string
+		String tempString = in.next();
+		tempString = tempString + " " + in.next();
+		//read in the integer value and create a Student object
+		int tempInt = in.nextInt();
+		students.add(new Student(tempString, tempInt));
+		
+		
+	
+		}
+		
+		in.close();
+
 	}
 	public void printInOrder()
 	{
@@ -45,9 +48,13 @@ public class ScoreTrakker {
 		loadDataFile("scores.txt");
 		printInOrder();
 	}
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException{
 		ScoreTrakker s = new ScoreTrakker();
-		s.processFiles();
-	}
-
+		s.loadDataFile("scores.txt");
+		System.out.println(s.students.get(1));
+		
+		
+	}	
+	
 }
+
