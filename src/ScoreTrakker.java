@@ -3,6 +3,7 @@ import java.util.Collections;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Scanner;
 
 /**
@@ -12,10 +13,20 @@ import java.util.Scanner;
  * 
  */
 public class ScoreTrakker {
+
 	private ArrayList<Student> students;
+	private String [] files = {"scores.txt", "badscore.txt", "nofile.txt"};
+
+
 	public ScoreTrakker() {
 		students = new ArrayList<Student>();
+
 	}
+	/**
+	 * 
+	 * @param fileName
+	 * @throws FileNotFoundException, error to be handled by processFiles()
+	 */
 	public void loadDataFile(String fileName)
 	{
 		FileReader reader;
@@ -42,26 +53,42 @@ public class ScoreTrakker {
 		}
 
 	}
+	
+	
+	/**
+	 * Sorts the items in the ArrayList and then prints them out with appropriate labels. 
+	 */
 	public void printInOrder()
 	{
-		System.out.print("hello");
+		//Put the Students in the correct order
 		Collections.sort(students);
-		for(Student student: students)
-		{
+		//Print out the header statement
+		System.out.println("Student Score List");
+		//Iterate through the ArrayList and print out the objects
+		for(Student student: students)	{
 			System.out.println(student);
 		}
+		//Add a blank line after the list
+		System.out.println("");
 	}
-	public void processFiles()
-	{
-		this.loadDataFile("scores.txt");
-		this.printInOrder();
+	
+	
+	/**
+	 * Loads and prints the information from the array of file names. 
+	 * @throws FileNotFoundException - this will go away, exception handling will be added 
+	 * to this function as a part of the requirement. 
+	 */
+	public void processFiles() throws FileNotFoundException	{
+		for (int i = 0; i < 3; i++) {
+			loadDataFile(files[i]);
+			printInOrder();
+		}
 	}
+	
+	
 	public static void main(String[] args) throws FileNotFoundException{
 		ScoreTrakker s = new ScoreTrakker();
-		s.loadDataFile("scores.txt");
-		//s.printInOrder();
-
+		s.processFiles();
 	}	
-	
 }
 
