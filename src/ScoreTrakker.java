@@ -3,7 +3,6 @@ import java.util.Collections;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Scanner;
 
 /**
@@ -16,7 +15,6 @@ public class ScoreTrakker {
 
 	private ArrayList<Student> students;
 	private String [] files = {"scores.txt", "badscore.txt", "nofile.txt"};
-
 
 	public ScoreTrakker() {
 		students = new ArrayList<Student>();
@@ -35,12 +33,12 @@ public class ScoreTrakker {
 			Scanner in  = new Scanner(reader);
 			//While there are more lines to read
 			while(in.hasNextLine()) {
-				//read the first two values and store them as a  string
-				String tempString = in.next();
-				tempString = tempString + " " + in.next();
-				//read in the integer value and create a Student object
-				int tempInt = in.nextInt();
-				students.add(new Student(tempString, tempInt));
+				//Reads the first number in as a string
+				String Name = in.nextLine();
+				System.out.println(Name);
+				String scoreString = in.nextLine();
+				int score = Integer.parseInt(scoreString);
+				students.add(new Student(Name, score));
 			}
 			in.close();
 			reader.close();
@@ -51,9 +49,7 @@ public class ScoreTrakker {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
-	
 	
 	/**
 	 * Sorts the items in the ArrayList and then prints them out with appropriate labels. 
@@ -72,21 +68,19 @@ public class ScoreTrakker {
 		System.out.println("");
 	}
 	
-	
 	/**
 	 * Loads and prints the information from the array of file names. 
 	 * @throws FileNotFoundException - this will go away, exception handling will be added 
 	 * to this function as a part of the requirement. 
 	 */
-	public void processFiles() throws FileNotFoundException	{
+	public void processFiles() {
 		for (int i = 0; i < 3; i++) {
 			loadDataFile(files[i]);
 			printInOrder();
 		}
 	}
 	
-	
-	public static void main(String[] args) throws FileNotFoundException{
+	public static void main(String[] args) {
 		ScoreTrakker s = new ScoreTrakker();
 		s.processFiles();
 	}	
