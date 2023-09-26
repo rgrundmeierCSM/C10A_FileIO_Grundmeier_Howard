@@ -25,7 +25,7 @@ public class ScoreTrakker {
 	 * @param fileName
 	 * @throws FileNotFoundException, error to be handled by processFiles()
 	 */
-	public void loadDataFile(String fileName)
+	public void loadDataFile(String fileName) throws FileNotFoundException
 	{
 		FileReader reader;
 		String Name = "";
@@ -44,7 +44,7 @@ public class ScoreTrakker {
 			in.close();
 			reader.close();
 		} catch (FileNotFoundException e) {
-			System.out.println("Can't open file: " + fileName + '\n');
+			throw new FileNotFoundException();
 		} catch (NumberFormatException e) {
 			System.out.println("Incorrect format for " + Name + " not a valid score " + scoreString + '\n');
 		} catch (IOException e) {
@@ -77,8 +77,13 @@ public class ScoreTrakker {
 	 */
 	public void processFiles() {
 		for (int i = 0; i < 3; i++) {
-			loadDataFile(files[i]);
-			printInOrder();
+			try
+			{
+				loadDataFile(files[i]);
+				printInOrder();
+			} catch (FileNotFoundException e) {
+				System.out.println("Can't open file: " + files[i] + '\n');
+			}
 		}
 	}
 	
