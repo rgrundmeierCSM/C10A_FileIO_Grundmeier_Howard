@@ -28,27 +28,29 @@ public class ScoreTrakker {
 	public void loadDataFile(String fileName)
 	{
 		FileReader reader;
+		String Name = "";
+		String scoreString = "";
 		try {
 			reader = new FileReader(fileName);
 			Scanner in  = new Scanner(reader);
 			//While there are more lines to read
 			while(in.hasNextLine()) {
 				//Reads the first number in as a string
-				String Name = in.nextLine();
-				System.out.println(Name);
-				String scoreString = in.nextLine();
+				Name = in.nextLine();
+				scoreString = in.nextLine();
 				int score = Integer.parseInt(scoreString);
 				students.add(new Student(Name, score));
 			}
 			in.close();
 			reader.close();
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Can't open file: " + fileName + '\n');
+		} catch (NumberFormatException e) {
+			System.out.println("Incorrect format for " + Name + " not a valid score " + scoreString + '\n');
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+			
 	}
 	
 	/**
